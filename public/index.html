@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventHorizon — Futuristic Event & Attendee Management System</title>
+  <meta name="description" content="A dynamic glassmorphic full-stack event and attendee management platform built with Node.js, Express, and SQLite.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Aurora Motion Orbs Background -->
+  <div class="aurora-mesh">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Main Sticky Header / Navbar -->
+  <header class="navbar">
+    <a href="#" class="brand" onclick="EventHorizonApp.switchSection('dashboard-section'); return false;">
+      <div class="brand-icon">🌌</div>
+      <span class="brand-title gradient-text">EventHorizon</span>
+    </a>
+
+    <nav class="nav-links">
+      <button class="nav-btn active" data-section="dashboard-section" onclick="EventHorizonApp.switchSection('dashboard-section')">
+        📊 Dashboard
+      </button>
+      <button class="nav-btn" data-section="events-section" onclick="EventHorizonApp.switchSection('events-section')">
+        📅 Events
+      </button>
+      <button class="nav-btn" data-section="attendees-section" onclick="EventHorizonApp.switchSection('attendees-section')">
+        👥 Attendees
+      </button>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="btn btn-glass btn-sm" onclick="EventHorizonApp.openRegisterModal()">
+        ⚡ Quick Register
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
+        + Create Event
+      </button>
+    </div>
+  </header>
+
+  <!-- Application Main Body -->
+  <main class="container">
+
+    <!-- Hero Banner -->
+    <section class="hero glass-panel">
+      <div class="hero-badge">
+        <span>✨ Event Horizon 1.0</span> &bull; Full-Stack Dynamic CRUD
+      </div>
+      <h1 class="hero-title">
+        Manage Events & Attendees <br>
+        <span class="gradient-text">Zero Reloads. Pure Speed.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Organise meetups, register attendees, monitor live seat capacities, and search records instantly with dynamic glassmorphism feedback.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="EventHorizonApp.openCreateEventModal()">
+          + Create New Event
+        </button>
+        <button class="btn btn-accent" onclick="EventHorizonApp.openRegisterModal()">
+          ⚡ Register Attendee
+        </button>
+        <button class="btn btn-glass" onclick="EventHorizonApp.switchSection('attendees-section')">
+          🔍 Live Attendees Search
+        </button>
+      </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard-section">
+      <!-- 4 Stat Cards -->
+      <div class="stats-grid">
+        <div class="glass-panel glass-panel-hover stat-card">
+          <div class="stat-icon stat-icon-purple">📅</div>
+          <div class="stat-info">
+            <h3 id="stat-total-events">0</h3>
+            <p>Total Events</p>
+          </div>
+        </div>
+
+        <div class="glass-panel glass-panel-hover stat-card">
+          <div class="stat-icon stat-icon-cyan">👥</div>
+          <div class="stat-info">
+            <h3 id="stat-total-attendees">0</h3>
+            <p>Registered Attendees</p>
+          </div>
+        </div>
+
+        <div class="glass-panel glass-panel-hover stat-card">
+          <div class="stat-icon stat-icon-pink">🪑</div>
+          <div class="stat-info">
+            <h3 id="stat-seats-left">0</h3>
+            <p>Total Seats Available</p>
+          </div>
+        </div>
+
+        <div class="glass-panel glass-panel-hover stat-card">
+          <div class="stat-icon stat-icon-amber">🚀</div>
+          <div class="stat-info">
+            <h3 id="stat-upcoming">0</h3>
+            <p>Upcoming Events</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span>📅</span> Event Directory
+        </h2>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <div class="search-box" style="width: 280px;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="events-search-input" placeholder="Search events or venue...">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
+            + Add Event
+          </button>
+        </div>
+      </div>
+
+      <!-- Events Grid Container -->
+      <div id="events-grid" class="events-grid">
+        <!-- Event Cards auto-rendered here -->
+      </div>
+    </section>
+
+    <!-- Attendees Section -->
+    <section id="attendees-section" style="margin-top: 2rem;">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span>👥</span> Attendees Directory
+          <span id="attendees-count-badge" class="badge badge-general" style="margin-left: 0.5rem;">0 Attendees</span>
+        </h2>
+        <button class="btn btn-accent btn-sm" onclick="EventHorizonApp.openRegisterModal()">
+          ⚡ Register New Attendee
+        </button>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="attendees-search-input" placeholder="Search attendees by name, email, or event...">
+        </div>
+
+        <div class="filter-group" id="ticket-filter-pills">
+          <button class="filter-pill active" data-ticket="All">All Tickets</button>
+          <button class="filter-pill" data-ticket="General">General</button>
+          <button class="filter-pill" data-ticket="VIP">VIP</button>
+          <button class="filter-pill" data-ticket="Student">Student</button>
+        </div>
+
+        <div class="filter-group">
+          <select id="attendees-event-filter" class="form-control" style="padding: 0.5rem 2rem 0.5rem 1rem; font-size: 0.85rem;">
+            <option value="">All Events</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table Container -->
+      <div class="table-container">
+        <table class="glass-table">
+          <thead>
+            <tr>
+              <th>Attendee Name</th>
+              <th>Email Address</th>
+              <th>Ticket Type</th>
+              <th>Registered Event</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="attendees-table-body">
+            <!-- Attendees auto-rendered here -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL 1: Create Event -->
+  <div id="modal-create-event" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">✨ Create New Event</h3>
+        <button class="close-btn" onclick="EventHorizonUI.closeModal('modal-create-event')">&times;</button>
+      </div>
+      <form id="form-create-event">
+        <div class="form-group">
+          <label class="form-label" for="event-name">Event Name *</label>
+          <input type="text" id="event-name" class="form-control" placeholder="e.g. AI Innovation Summit 2026" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="event-date">Event Date *</label>
+          <input type="date" id="event-date" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="event-venue">Venue / Location *</label>
+          <input type="text" id="event-venue" class="form-control" placeholder="e.g. Grand Cyber Hall, Tech City" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="event-capacity">Total Seat Capacity *</label>
+          <input type="number" id="event-capacity" class="form-control" placeholder="e.g. 50" min="1" required>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-glass" onclick="EventHorizonUI.closeModal('modal-create-event')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Register Attendee -->
+  <div id="modal-register-attendee" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚡ Register Attendee</h3>
+        <button class="close-btn" onclick="EventHorizonUI.closeModal('modal-register-attendee')">&times;</button>
+      </div>
+      <form id="form-register-attendee">
+        <div class="form-group">
+          <label class="form-label" for="register-event-id">Select Target Event *</label>
+          <select id="register-event-id" class="form-control" required>
+            <option value="">-- Select Event --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="register-name">Full Name *</label>
+          <input type="text" id="register-name" class="form-control" placeholder="e.g. Sarah Connor" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="register-email">Email Address *</label>
+          <input type="email" id="register-email" class="form-control" placeholder="e.g. sarah.connor@cyberdyne.io" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ticket Type *</label>
+          <div class="ticket-type-selector">
+            <label>
+              <input type="radio" name="ticket_type" value="General" class="ticket-radio" checked>
+              <div class="ticket-option">
+                <span>General</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="ticket_type" value="VIP" class="ticket-radio">
+              <div class="ticket-option">
+                <span>VIP</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="ticket_type" value="Student" class="ticket-radio">
+              <div class="ticket-option">
+                <span>Student</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-glass" onclick="EventHorizonUI.closeModal('modal-register-attendee')">Cancel</button>
+          <button type="submit" class="btn btn-accent">Confirm Registration</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: View Event Details & Attendees -->
+  <div id="modal-event-details" class="modal-overlay">
+    <div class="modal-content" style="max-width: 720px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="details-event-name" class="modal-title">Event Details</h3>
+          <p id="details-event-meta" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;"></p>
+        </div>
+        <button class="close-btn" onclick="EventHorizonUI.closeModal('modal-event-details')">&times;</button>
+      </div>
+
+      <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <h4 style="font-size: 1.1rem;">Registered Attendees</h4>
+        <button id="btn-quick-register-modal" class="btn btn-primary btn-sm">
+          + Register Someone
+        </button>
+      </div>
+
+      <div id="details-attendees-list" class="table-container" style="max-height: 380px; overflow-y: auto;">
+        <!-- Attendee rows rendered dynamically -->
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+        <button type="button" class="btn btn-glass" onclick="EventHorizonUI.closeModal('modal-event-details')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Confirm Delete -->
+  <div id="modal-confirm-delete" class="modal-overlay">
+    <div class="modal-content" style="max-width: 440px; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 0.5rem; color: var(--color-danger);">⚠️</div>
+      <h3 id="delete-confirm-title" class="modal-title">Are you sure?</h3>
+      <p id="delete-confirm-message" style="color: var(--text-secondary); margin: 0.75rem 0 1.5rem; font-size: 0.95rem;">
+        This action cannot be undone.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 0.75rem;">
+        <button type="button" class="btn btn-glass" onclick="EventHorizonUI.closeModal('modal-confirm-delete')">Cancel</button>
+        <button type="button" id="btn-confirm-delete-action" class="btn btn-danger">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

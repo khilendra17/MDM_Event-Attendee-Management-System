@@ -1,37 +1,37 @@
 /**
- * EventHorizon UI Module
- * Handles DOM rendering, state updates, modal management, toasts, and animations
+ * EventHorizon Holographic UI Renderer & FX Engine
+ * Implements 3D tilt, tracking spotlight glows, confetti bursts, live ticket previews, and Command Palette
  */
 
 class EventHorizonUI {
 
   // Toast System
   static showToast(message, type = 'success') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
+    const shelf = document.getElementById('toast-shelf');
+    if (!shelf) return;
 
     const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
+    toast.className = `toast-item toast-${type}`;
 
     let icon = '✨';
     if (type === 'error') icon = '⚠️';
     if (type === 'info') icon = 'ℹ️';
 
     toast.innerHTML = `
-      <div class="toast-icon">${icon}</div>
-      <div class="toast-message">${EventHorizonUI.escapeHTML(message)}</div>
+      <div style="font-size: 1.4rem;">${icon}</div>
+      <div style="font-size: 0.9rem; font-weight: 500; color: #fff;">${this.escapeHTML(message)}</div>
     `;
 
-    container.appendChild(toast);
+    shelf.appendChild(toast);
 
     setTimeout(() => {
       toast.style.opacity = '0';
       toast.style.transform = 'translateX(100%)';
       setTimeout(() => toast.remove(), 350);
-    }, 4000);
+    }, 4200);
   }
 
-  // Escape HTML to prevent XSS
+  // HTML Sanitization
   static escapeHTML(str) {
     if (!str) return '';
     return String(str)
@@ -42,7 +42,7 @@ class EventHorizonUI {
       .replace(/'/g, '&#039;');
   }
 
-  // Format Date String nicely
+  // Date Formatting
   static formatDate(dateStr) {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -55,41 +55,110 @@ class EventHorizonUI {
     });
   }
 
-  // Section / View Switcher
-  static switchSection(sectionId) {
-    const sections = ['dashboard-section', 'events-section', 'attendees-section'];
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = (id === sectionId) ? 'block' : 'none';
-    });
+  // Vanilla Canvas Confetti Burst Engine
+  static triggerConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    if (!canvas) return;
 
-    const navButtons = document.querySelectorAll('.nav-btn');
-    navButtons.forEach(btn => {
-      if (btn.dataset.section === sectionId) {
-        btn.classList.add('active');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const colors = ['#8b5cf6', '#22d3ee', '#f472b6', '#f59e0b', '#10b981', '#ffffff'];
+
+    for (let i = 0; i < 90; i++) {
+      particles.push({
+        x: canvas.width / 2,
+        y: canvas.height / 2 + 100,
+        vx: (Math.random() - 0.5) * 18,
+        vy: (Math.random() - 0.8) * 22,
+        size: Math.random() * 8 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rSpeed: (Math.random() - 0.5) * 12,
+        alpha: 1
+      });
+    }
+
+    let animationFrame;
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+
+      particles.forEach(p => {
+        if (p.alpha > 0) {
+          alive = true;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.45; // gravity
+          p.rotation += p.rSpeed;
+          p.alpha -= 0.015;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        }
+      });
+
+      if (alive) {
+        animationFrame = requestAnimationFrame(render);
       } else {
-        btn.classList.remove('active');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        cancelAnimationFrame(animationFrame);
       }
-    });
+    }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    render();
   }
 
-  // Animated Count-Up Numbers
+  // Tracking Spotlight & 3D Tilt Effect Setup
+  static setupCardSpotlights() {
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
+        // 3D Tilt calculation
+        if (card.classList.contains('tilt-card')) {
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -8;
+          const rotateY = ((x - centerX) / centerX) * 8;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (card.classList.contains('tilt-card')) {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+        }
+      });
+    });
+  }
+
+  // Count-Up Stat Numbers
   static animateCount(elementId, targetValue) {
     const el = document.getElementById(elementId);
     if (!el) return;
 
     const startValue = parseInt(el.innerText) || 0;
-    const duration = 800; // ms
+    const duration = 900;
     const startTime = performance.now();
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const easeProgress = 1 - Math.pow(1 - progress, 3); // cubic ease out
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(startValue + (targetValue - startValue) * easeProgress);
-      
+
       el.innerText = current.toLocaleString();
 
       if (progress < 1) {
@@ -102,81 +171,142 @@ class EventHorizonUI {
     requestAnimationFrame(update);
   }
 
-  // Update Dashboard Stats
-  static updateStats(stats) {
-    this.animateCount('stat-total-events', stats.total_events);
-    this.animateCount('stat-total-attendees', stats.total_attendees);
-    this.animateCount('stat-seats-left', stats.total_seats_left);
-    this.animateCount('stat-upcoming', stats.upcoming_events);
+  // Update Bento Dashboard & Donut Chart
+  static updateDashboard(stats, nextEventDateStr = null) {
+    this.animateCount('bento-events-count', stats.total_events || 0);
+    this.animateCount('bento-attendees-count', stats.total_attendees || 0);
+    this.animateCount('bento-seats-count', stats.total_seats_left || 0);
+
+    // Update Animated Donut Segment
+    const donutSegment = document.getElementById('donut-segment');
+    const donutRatioText = document.getElementById('donut-ratio-text');
+    if (donutSegment && stats.total_capacity > 0) {
+      const occupied = stats.total_attendees || 0;
+      const capacity = stats.total_capacity;
+      const fillPercentage = Math.min(occupied / capacity, 1);
+      const totalDash = 283;
+      const offset = totalDash - (totalDash * fillPercentage);
+      donutSegment.style.strokeDashoffset = offset;
+
+      if (donutRatioText) {
+        donutRatioText.innerText = `${Math.round(fillPercentage * 100)}%`;
+      }
+    }
+
+    // Update Next Event Countdown Clock
+    this.updateCountdownClock(nextEventDateStr);
+  }
+
+  // Live Countdown Clock
+  static updateCountdownClock(targetDateStr) {
+    const clockContainer = document.getElementById('countdown-container');
+    if (!clockContainer) return;
+
+    if (!targetDateStr) {
+      clockContainer.innerHTML = `<p style="color: #64748b; font-size: 0.9rem;">No upcoming events scheduled</p>`;
+      return;
+    }
+
+    const targetDate = new Date(targetDateStr).getTime();
+    const now = Date.now();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      clockContainer.innerHTML = `<p style="color: var(--cyan-primary); font-size: 0.9rem;">Event is taking place today!</p>`;
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    clockContainer.innerHTML = `
+      <div class="countdown-box">
+        <div class="countdown-unit">
+          <div class="countdown-num">${days}</div>
+          <div class="countdown-lbl">Days</div>
+        </div>
+        <div class="countdown-unit">
+          <div class="countdown-num">${hours}</div>
+          <div class="countdown-lbl">Hours</div>
+        </div>
+        <div class="countdown-unit">
+          <div class="countdown-num">${mins}</div>
+          <div class="countdown-lbl">Mins</div>
+        </div>
+      </div>
+    `;
   }
 
   // Render Event Cards Grid
   static renderEventsGrid(events, onRegisterClick, onViewClick, onDeleteClick) {
-    const container = document.getElementById('events-grid');
+    const container = document.getElementById('events-cards-grid');
     if (!container) return;
 
     if (events.length === 0) {
       container.innerHTML = `
-        <div class="empty-state glass-panel" style="grid-column: 1 / -1;">
-          <div class="empty-icon">📅</div>
-          <div class="empty-title">No events found</div>
-          <p>Create your first event or adjust your search filter.</p>
-          <button class="btn btn-primary" style="margin-top: 1rem;" onclick="EventHorizonApp.openCreateEventModal()">+ Create Event</button>
+        <div class="spotlight-card" style="grid-column: 1 / -1; padding: 4rem; text-align: center;">
+          <div style="font-size: 3.5rem; margin-bottom: 1rem;">📅</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">No Events Found</h3>
+          <p style="color: #94a3b8; margin-bottom: 1.5rem;">Create a new event or refine your search query.</p>
+          <button class="btn-shimmer btn-holo" onclick="EventHorizonApp.openCreateEventModal()">+ Create Event</button>
         </div>
       `;
       return;
     }
 
-    container.innerHTML = events.map(event => {
-      const capacityPercent = Math.min(Math.round((event.registered_count / event.capacity) * 100), 100);
-      const isFull = event.seats_left <= 0;
-      
-      let barClass = '';
-      if (capacityPercent >= 100) barClass = 'full';
-      else if (capacityPercent >= 80) barClass = 'warning';
+    container.innerHTML = events.map(e => {
+      const capacityPercent = Math.min(Math.round((e.registered_count / e.capacity) * 100), 100);
+      const isSoldOut = e.seats_left <= 0;
+      const isAlmostFull = !isSoldOut && e.seats_left <= Math.max(3, Math.ceil(e.capacity * 0.2));
 
-      let seatBadge = isFull 
-        ? `<span class="badge badge-full">FULL</span>` 
-        : `<span class="badge badge-available">${event.seats_left} seats left</span>`;
+      let badge = `<span class="badge-holo badge-general-cyan">${e.seats_left} seats left</span>`;
+      let fillClass = '';
+
+      if (isSoldOut) {
+        badge = `<span class="badge-holo badge-sold-out">SOLD OUT</span>`;
+        fillClass = 'sold-out';
+      } else if (isAlmostFull) {
+        badge = `<span class="badge-holo badge-almost-full">ALMOST FULL</span>`;
+        fillClass = 'almost-full';
+      }
 
       return `
-        <div class="glass-panel glass-panel-hover event-card" data-event-id="${event.id}">
-          <div class="event-header">
-            <h3 class="event-name">${this.escapeHTML(event.name)}</h3>
-            ${seatBadge}
+        <div class="spotlight-card tilt-card event-hologram-card" data-event-id="${e.id}">
+          <div class="event-card-header">
+            <h3 class="event-card-title">${this.escapeHTML(e.name)}</h3>
+            ${badge}
           </div>
 
-          <div class="event-meta">
-            <div class="meta-item">
-              <span>📅</span>
-              <span>${this.formatDate(event.date)}</span>
+          <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.35rem;">
+              <span>📅</span> <span>${this.formatDate(e.date)}</span>
             </div>
-            <div class="meta-item">
-              <span>📍</span>
-              <span>${this.escapeHTML(event.venue)}</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span>📍</span> <span>${this.escapeHTML(e.venue)}</span>
             </div>
           </div>
 
-          <div class="capacity-container">
-            <div class="capacity-info">
+          <div class="capacity-progress-wrapper">
+            <div class="capacity-labels">
               <span>Capacity</span>
-              <span><strong>${event.registered_count}</strong> / ${event.capacity} (${capacityPercent}%)</span>
+              <span><strong>${e.registered_count}</strong> / ${e.capacity} (${capacityPercent}%)</span>
             </div>
-            <div class="capacity-bar-bg">
-              <div class="capacity-bar-fill ${barClass}" style="width: ${capacityPercent}%;"></div>
+            <div class="progress-track">
+              <div class="progress-fill ${fillClass}" style="width: ${capacityPercent}%;"></div>
             </div>
           </div>
 
-          <div class="event-footer">
-            <button class="btn btn-primary btn-sm btn-register" 
-              ${isFull ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} 
-              data-id="${event.id}">
+          <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+            <button class="btn-shimmer btn-holo btn-sm btn-register-card" 
+              ${isSoldOut ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} 
+              data-id="${e.id}">
               ⚡ Register
             </button>
-            <button class="btn btn-glass btn-sm btn-view-attendees" data-id="${event.id}">
+            <button class="btn-shimmer btn-glass-subtle btn-sm btn-view-card" data-id="${e.id}">
               👁️ Attendees
             </button>
-            <button class="btn btn-danger btn-sm btn-delete-event" data-id="${event.id}" data-name="${this.escapeHTML(event.name)}">
+            <button class="btn-shimmer btn-danger-glass btn-sm btn-delete-card" data-id="${e.id}" data-name="${this.escapeHTML(e.name)}">
               🗑️
             </button>
           </div>
@@ -184,173 +314,125 @@ class EventHorizonUI {
       `;
     }).join('');
 
-    // Attach Event Listeners to Card Buttons
-    container.querySelectorAll('.btn-register').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = Number(e.currentTarget.dataset.id);
-        if (onRegisterClick) onRegisterClick(id);
-      });
+    // Attach Handlers & Re-init Spotlight Tracking
+    container.querySelectorAll('.btn-register-card').forEach(btn => {
+      btn.addEventListener('click', (ev) => onRegisterClick(Number(ev.currentTarget.dataset.id)));
     });
 
-    container.querySelectorAll('.btn-view-attendees').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = Number(e.currentTarget.dataset.id);
-        if (onViewClick) onViewClick(id);
-      });
+    container.querySelectorAll('.btn-view-card').forEach(btn => {
+      btn.addEventListener('click', (ev) => onViewClick(Number(ev.currentTarget.dataset.id)));
     });
 
-    container.querySelectorAll('.btn-delete-event').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = Number(e.currentTarget.dataset.id);
-        const name = e.currentTarget.dataset.name;
-        if (onDeleteClick) onDeleteClick(id, name);
-      });
+    container.querySelectorAll('.btn-delete-card').forEach(btn => {
+      btn.addEventListener('click', (ev) => onDeleteClick(Number(ev.currentTarget.dataset.id), ev.currentTarget.dataset.name));
     });
+
+    this.setupCardSpotlights();
   }
 
-  // Populate Event Dropdown Options
-  static populateEventDropdown(events, selectElementId, selectedId = null) {
-    const select = document.getElementById(selectElementId);
-    if (!select) return;
-
-    select.innerHTML = '<option value="">-- Select an Event --</option>' + 
-      events.map(e => `
-        <option value="${e.id}" ${selectedId == e.id ? 'selected' : ''} ${e.seats_left <= 0 ? 'disabled' : ''}>
-          ${this.escapeHTML(e.name)} (${e.seats_left > 0 ? e.seats_left + ' seats left' : 'FULL'})
-        </option>
-      `).join('');
-  }
-
-  // Render Attendees Table
-  static renderAttendeesTable(attendees, onDeleteAttendeeClick) {
-    const container = document.getElementById('attendees-table-body');
-    const countBadge = document.getElementById('attendees-count-badge');
+  // Render Holographic Boarding Pass Attendees View
+  static renderAttendeesBoardingPasses(attendees, onDeleteClick) {
+    const container = document.getElementById('attendees-display-container');
+    const badge = document.getElementById('attendees-count-tag');
     if (!container) return;
 
-    if (countBadge) {
-      countBadge.innerText = `${attendees.length} Attendees`;
-    }
+    if (badge) badge.innerText = `${attendees.length} Attendees`;
 
     if (attendees.length === 0) {
       container.innerHTML = `
-        <tr>
-          <td colspan="5" class="empty-state">
-            <div class="empty-icon">👥</div>
-            <div class="empty-title">No attendees registered yet</div>
-            <p>Use the "Register Attendee" button to add someone to an event.</p>
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    container.innerHTML = attendees.map(a => {
-      let ticketBadge = 'badge-general';
-      if (a.ticket_type === 'VIP') ticketBadge = 'badge-vip';
-      if (a.ticket_type === 'Student') ticketBadge = 'badge-student';
-
-      const initial = a.name.charAt(0).toUpperCase();
-
-      return `
-        <tr>
-          <td>
-            <div class="attendee-user">
-              <div class="avatar">${initial}</div>
-              <div>
-                <strong style="color: #fff; font-size: 1rem;">${this.escapeHTML(a.name)}</strong>
-              </div>
-            </div>
-          </td>
-          <td>${this.escapeHTML(a.email)}</td>
-          <td>
-            <span class="badge ${ticketBadge}">${a.ticket_type}</span>
-          </td>
-          <td>
-            <div style="font-weight: 500; color: #fff;">${this.escapeHTML(a.event_name)}</div>
-            <div style="font-size: 0.8rem; color: var(--text-secondary);">${this.formatDate(a.event_date)}</div>
-          </td>
-          <td style="text-align: right;">
-            <button class="btn btn-danger btn-sm btn-delete-attendee" data-id="${a.id}" data-name="${this.escapeHTML(a.name)}">
-              🗑️ Delete
-            </button>
-          </td>
-        </tr>
-      `;
-    }).join('');
-
-    // Attach listeners
-    container.querySelectorAll('.btn-delete-attendee').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = Number(e.currentTarget.dataset.id);
-        const name = e.currentTarget.dataset.name;
-        if (onDeleteAttendeeClick) onDeleteAttendeeClick(id, name);
-      });
-    });
-  }
-
-  // Render Event Details Modal Contents
-  static renderEventDetailsModal(event, onDeleteAttendeeClick) {
-    const titleEl = document.getElementById('details-event-name');
-    const metaEl = document.getElementById('details-event-meta');
-    const bodyEl = document.getElementById('details-attendees-list');
-
-    if (titleEl) titleEl.innerText = event.name;
-    if (metaEl) {
-      metaEl.innerHTML = `
-        <span>📅 Date: ${this.formatDate(event.date)}</span> &bull; 
-        <span>📍 Venue: ${this.escapeHTML(event.venue)}</span> &bull; 
-        <span>🪑 Registered: ${event.registered_count} / ${event.capacity} (${event.seats_left} seats left)</span>
-      `;
-    }
-
-    if (!bodyEl) return;
-
-    if (!event.attendees || event.attendees.length === 0) {
-      bodyEl.innerHTML = `
-        <div class="empty-state">
-          <p>No attendees have registered for this event yet.</p>
+        <div class="spotlight-card" style="grid-column: 1 / -1; padding: 4rem; text-align: center;">
+          <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎫</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">No Attendees Registered</h3>
+          <p style="color: #94a3b8; margin-bottom: 1.5rem;">Use the registration form to issue holographic passes.</p>
+          <button class="btn-shimmer btn-pink" onclick="EventHorizonApp.switchSection('register-section')">⚡ Register Attendee</button>
         </div>
       `;
       return;
     }
 
-    bodyEl.innerHTML = `
-      <table class="glass-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Ticket</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${event.attendees.map(a => `
-            <tr>
-              <td><strong>${this.escapeHTML(a.name)}</strong></td>
-              <td>${this.escapeHTML(a.email)}</td>
-              <td><span class="badge badge-${a.ticket_type.toLowerCase()}">${a.ticket_type}</span></td>
-              <td>
-                <button class="btn btn-danger btn-sm btn-delete-modal-attendee" data-id="${a.id}" data-name="${this.escapeHTML(a.name)}">
-                  🗑️
-                </button>
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
+    container.className = 'tickets-grid';
+    container.innerHTML = attendees.map(a => {
+      let badgeClass = 'badge-general-cyan';
+      if (a.ticket_type === 'VIP') badgeClass = 'badge-vip-foil';
+      if (a.ticket_type === 'Student') badgeClass = 'badge-student-lime';
 
-    bodyEl.querySelectorAll('.btn-delete-modal-attendee').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = Number(e.currentTarget.dataset.id);
-        const name = e.currentTarget.dataset.name;
-        if (onDeleteAttendeeClick) onDeleteAttendeeClick(id, name);
-      });
+      return `
+        <div class="spotlight-card tilt-card boarding-pass-card">
+          <div class="pass-header">
+            <div>
+              <span class="badge-holo ${badgeClass}">${a.ticket_type} PASS</span>
+            </div>
+            <div style="font-size: 0.8rem; color: #64748b; font-family: var(--font-heading);">
+              #EH-${a.id}
+            </div>
+          </div>
+
+          <div class="pass-body">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem;">${this.escapeHTML(a.name)}</h3>
+            <p style="color: var(--cyan-primary); font-size: 0.88rem; margin-bottom: 1rem;">${this.escapeHTML(a.email)}</p>
+
+            <div style="background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
+              <div style="color: #94a3b8; font-size: 0.75rem; text-transform: uppercase;">Event</div>
+              <strong style="color: #fff;">${this.escapeHTML(a.event_name)}</strong>
+              <div style="color: #64748b; font-size: 0.8rem; margin-top: 0.25rem;">📅 ${this.formatDate(a.event_date)}</div>
+            </div>
+          </div>
+
+          <div class="pass-footer">
+            <!-- CSS Barcode -->
+            <div class="barcode">
+              <div class="barcode-bar w-2"></div>
+              <div class="barcode-bar w-1"></div>
+              <div class="barcode-bar w-3"></div>
+              <div class="barcode-bar w-1"></div>
+              <div class="barcode-bar w-2"></div>
+              <div class="barcode-bar w-3"></div>
+              <div class="barcode-bar w-1"></div>
+              <div class="barcode-bar w-2"></div>
+            </div>
+
+            <button class="btn-shimmer btn-danger-glass btn-sm btn-delete-pass" data-id="${a.id}" data-name="${this.escapeHTML(a.name)}">
+              🗑️ Cancel Pass
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.btn-delete-pass').forEach(btn => {
+      btn.addEventListener('click', (ev) => onDeleteClick(Number(ev.currentTarget.dataset.id), ev.currentTarget.dataset.name));
     });
+
+    this.setupCardSpotlights();
   }
 
-  // Modal Show / Hide Utils
+  // Update Live Registration Holographic Ticket Preview
+  static updateLiveTicketPreview(name, email, ticketType, eventName) {
+    const previewName = document.getElementById('preview-ticket-name');
+    const previewEmail = document.getElementById('preview-ticket-email');
+    const previewBadge = document.getElementById('preview-ticket-badge');
+    const previewEvent = document.getElementById('preview-ticket-event');
+
+    if (previewName) previewName.innerText = name.trim() || 'PASS HOLDER NAME';
+    if (previewEmail) previewEmail.innerText = email.trim() || 'attendee@horizon.io';
+    if (previewEvent) previewEvent.innerText = eventName || 'Select an Event';
+
+    if (previewBadge) {
+      previewBadge.className = 'badge-holo';
+      if (ticketType === 'VIP') {
+        previewBadge.classList.add('badge-vip-foil');
+        previewBadge.innerText = 'VIP PASS';
+      } else if (ticketType === 'Student') {
+        previewBadge.classList.add('badge-student-lime');
+        previewBadge.innerText = 'STUDENT PASS';
+      } else {
+        previewBadge.classList.add('badge-general-cyan');
+        previewBadge.innerText = 'GENERAL PASS';
+      }
+    }
+  }
+
+  // Modals & Overlays
   static openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {

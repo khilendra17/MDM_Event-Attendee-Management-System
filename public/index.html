@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EventHorizon — Holographic Event Deck</title>
-  <meta name="description" content="EventHorizon is a futuristic holographic Event & Attendee Management System built with pure HTML5, CSS3, and ES JavaScript.">
+  <title>EventHorizon — Mysterious Executive Navy & Gold System</title>
+  <meta name="description" content="EventHorizon is a sovereign, high-contrast Navy & Gold Event and Attendee Management Platform.">
 
-  <!-- Google Fonts: Sora & Inter -->
+  <!-- Google Fonts: Syne, Plus Jakarta Sans, Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -19,162 +19,172 @@
   <!-- Confetti Canvas Layer -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Aurora Mesh Animated Background -->
-  <div class="aurora-container">
-    <div class="aurora-orb aurora-1"></div>
-    <div class="aurora-orb aurora-2"></div>
-    <div class="aurora-orb aurora-3"></div>
+  <!-- Starry Midnight Background Mesh -->
+  <div class="gold-aura-bg">
+    <div class="aurora-orb orb-navy-1"></div>
+    <div class="aurora-orb orb-gold-2"></div>
+    <div class="aurora-orb orb-navy-3"></div>
   </div>
 
-  <!-- Floating Glass Top Navbar -->
-  <header class="navbar-floating">
-    <a href="#" class="nav-brand" onclick="EventHorizonApp.switchSection('home-section'); return false;">
-      <div class="nav-brand-logo">🌌</div>
+  <!-- Executive Floating Glass Navbar -->
+  <header class="navy-navbar">
+    <a href="#" class="navy-brand" onclick="EventHorizonApp.switchSection('home-section'); return false;">
+      <div class="navy-brand-emblem">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#070d1e" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
       <div>
-        <span class="nav-brand-title gradient-title">EventHorizon</span>
-        <span id="demo-mode-badge" class="badge-holo badge-vip-foil" style="display:none; margin-left: 0.5rem; font-size: 0.65rem;">DEMO MODE</span>
+        <span class="navy-brand-title gold-text-gradient">EventHorizon</span>
+        <span id="demo-mode-badge" class="badge-gold badge-vip-gold" style="display:none; margin-left: 0.5rem; font-size: 0.65rem;">DEMO MODE</span>
       </div>
     </a>
 
-    <nav class="nav-center-menu">
-      <button class="nav-link active" data-section="home-section" onclick="EventHorizonApp.switchSection('home-section')">
-        📊 Home
+    <nav class="navy-menu">
+      <button class="navy-menu-btn active" data-section="home-section" onclick="EventHorizonApp.switchSection('home-section')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
       </button>
-      <button class="nav-link" data-section="events-section" onclick="EventHorizonApp.switchSection('events-section')">
-        📅 Events
+      <button class="navy-menu-btn" data-section="events-section" onclick="EventHorizonApp.switchSection('events-section')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Events
       </button>
-      <button class="nav-link" data-section="register-section" onclick="EventHorizonApp.switchSection('register-section')">
-        ⚡ Register
+      <button class="navy-menu-btn" data-section="register-section" onclick="EventHorizonApp.switchSection('register-section')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+        Register
       </button>
-      <button class="nav-link" data-section="attendees-section" onclick="EventHorizonApp.switchSection('attendees-section')">
-        🎫 Attendees
+      <button class="navy-menu-btn" data-section="attendees-section" onclick="EventHorizonApp.switchSection('attendees-section')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Attendees
       </button>
     </nav>
 
-    <div class="nav-right-actions">
-      <button class="cmd-k-trigger" onclick="EventHorizonApp.toggleCmdK(true)">
-        <span>🔍 Search</span>
-        <kbd style="background:rgba(255,255,255,0.1); padding:0.1rem 0.4rem; border-radius:4px;">Ctrl+K</kbd>
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <button class="btn-navy-outline btn-sm" onclick="EventHorizonApp.toggleCmdK(true)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Search</span>
+        <kbd style="background:rgba(255,255,255,0.08); padding:0.1rem 0.4rem; border-radius:4px; font-size:0.75rem;">Ctrl+K</kbd>
       </button>
 
-      <button class="btn-shimmer btn-holo btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
-        + New Event
+      <button class="btn-gold btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#070d1e" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Event
       </button>
     </div>
   </header>
 
-  <!-- Mobile Bottom Glass Navigation Bar -->
+  <!-- Mobile Bottom Tab Bar -->
   <nav class="mobile-tab-bar">
-    <button class="nav-link active" data-section="home-section" onclick="EventHorizonApp.switchSection('home-section')">📊 Home</button>
-    <button class="nav-link" data-section="events-section" onclick="EventHorizonApp.switchSection('events-section')">📅 Events</button>
-    <button class="nav-link" data-section="register-section" onclick="EventHorizonApp.switchSection('register-section')">⚡ Register</button>
-    <button class="nav-link" data-section="attendees-section" onclick="EventHorizonApp.switchSection('attendees-section')">🎫 Passes</button>
+    <button class="navy-menu-btn active" data-section="home-section" onclick="EventHorizonApp.switchSection('home-section')">Overview</button>
+    <button class="navy-menu-btn" data-section="events-section" onclick="EventHorizonApp.switchSection('events-section')">Events</button>
+    <button class="navy-menu-btn" data-section="register-section" onclick="EventHorizonApp.switchSection('register-section')">Register</button>
+    <button class="navy-menu-btn" data-section="attendees-section" onclick="EventHorizonApp.switchSection('attendees-section')">Passes</button>
   </nav>
 
   <!-- Main Container -->
   <main class="container">
 
-    <!-- SECTION 1: HOME & BENTO DASHBOARD -->
+    <!-- SECTION 1: HOME OVERVIEW & BENTO STATS -->
     <section id="home-section">
-      <!-- Hero Banner -->
-      <div class="spotlight-card hero-hologram">
-        <div class="hero-pill-badge">
-          <span>⚡ HOLOGRAPHIC EVENT DECK v1.0</span> &bull; ZERO RELOADS
+      <div class="navy-card hero-navy">
+        <div class="hero-tag-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          SOVEREIGN EXECUTIVE PLATFORM v1.0
         </div>
-        <h1 class="hero-main-title">
-          Next-Gen Event & Attendee Management <br>
-          <span class="gradient-title">Real-Time. Dynamic. Holographic.</span>
+        <h1 class="hero-heading">
+          Executive Event & Delegate System <br>
+          <span class="gold-text-gradient">Precision. Security. Real-Time Operations.</span>
         </h1>
-        <p class="hero-sub">
-          Manage upcoming conferences, issue boarding pass tickets, enforce venue capacity in real-time, and search attendees instantaneously.
+        <p class="hero-subtext">
+          Manage high-capacity summits, issue official delegation passes, track real-time venue occupancy, and execute instant global queries with zero reloads.
         </p>
-        <div class="hero-btn-row">
-          <button class="btn-shimmer btn-holo" onclick="EventHorizonApp.openCreateEventModal()">
-            + Create New Event
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn-gold" onclick="EventHorizonApp.openCreateEventModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#070d1e" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Create New Event
           </button>
-          <button class="btn-shimmer btn-pink" onclick="EventHorizonApp.switchSection('register-section')">
-            ⚡ Register Attendee
-          </button>
-          <button class="btn-shimmer btn-glass-subtle" onclick="EventHorizonApp.switchSection('events-section')">
-            🔍 Explore Events Directory
+          <button class="btn-navy-outline" onclick="EventHorizonApp.switchSection('register-section')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+            Register Delegate
           </button>
         </div>
       </div>
 
       <!-- Bento Grid Stats Dashboard -->
       <div class="bento-grid">
-        <!-- Item 1: Total Events -->
-        <div class="spotlight-card tilt-card bento-item">
-          <div class="bento-header">
-            <span class="bento-label">Total Events</span>
-            <div class="bento-icon-box" style="background: rgba(139, 92, 246, 0.15); color: var(--violet-primary);">📅</div>
+        <div class="navy-card bento-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Total Events</span>
+            <div class="bento-icon-gold">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
           </div>
           <div>
-            <div id="bento-events-count" class="bento-value">0</div>
-            <p style="font-size: 0.8rem; color: #64748b;">Active registered events</p>
+            <div id="bento-events-count" class="bento-stat-val">0</div>
+            <p style="font-size:0.8rem; color:#64748b;">Active events in database</p>
           </div>
         </div>
 
-        <!-- Item 2: Total Attendees -->
-        <div class="spotlight-card tilt-card bento-item">
-          <div class="bento-header">
-            <span class="bento-label">Registered Attendees</span>
-            <div class="bento-icon-box" style="background: rgba(34, 211, 238, 0.15); color: var(--cyan-primary);">🎫</div>
+        <div class="navy-card bento-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Registered Delegates</span>
+            <div class="bento-icon-gold">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
           </div>
           <div>
-            <div id="bento-attendees-count" class="bento-value">0</div>
-            <p style="font-size: 0.8rem; color: #64748b;">Issued holographic passes</p>
+            <div id="bento-attendees-count" class="bento-stat-val">0</div>
+            <p style="font-size:0.8rem; color:#64748b;">Issued official passes</p>
           </div>
         </div>
 
-        <!-- Item 3: Total Seats Left -->
-        <div class="spotlight-card tilt-card bento-item">
-          <div class="bento-header">
-            <span class="bento-label">Seats Available</span>
-            <div class="bento-icon-box" style="background: rgba(244, 114, 182, 0.15); color: var(--pink-primary);">🪑</div>
+        <div class="navy-card bento-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Open Seat Capacity</span>
+            <div class="bento-icon-gold">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><path d="M13 5v14"/></svg>
+            </div>
           </div>
           <div>
-            <div id="bento-seats-count" class="bento-value">0</div>
-            <p style="font-size: 0.8rem; color: #64748b;">Open venue spots</p>
+            <div id="bento-seats-count" class="bento-stat-val">0</div>
+            <p style="font-size:0.8rem; color:#64748b;">Available seat positions</p>
           </div>
         </div>
 
-        <!-- Item 4: Occupancy Ratio Donut Chart (Bento Wide) -->
-        <div class="spotlight-card tilt-card bento-item bento-wide">
-          <div class="bento-header">
-            <span class="bento-label">Overall Venue Occupancy</span>
-            <span class="badge-holo badge-general-cyan">LIVE CAPACITIES</span>
+        <!-- Donut Occupancy Chart (Bento Wide) -->
+        <div class="navy-card bento-card bento-wide">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Venue Occupancy Metrics</span>
+            <span class="badge-gold badge-vip-gold">REAL-TIME RATIO</span>
           </div>
 
-          <div class="donut-wrapper">
+          <div class="donut-box">
             <svg class="donut-svg" viewBox="0 0 100 100">
               <defs>
-                <linearGradient id="donut-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#8b5cf6" />
-                  <stop offset="50%" stop-color="#22d3ee" />
-                  <stop offset="100%" stop-color="#f472b6" />
+                <linearGradient id="gold-donut-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="50%" stop-color="#f59e0b" />
+                  <stop offset="100%" stop-color="#d97706" />
                 </linearGradient>
               </defs>
-              <circle class="donut-bg" cx="50" cy="50" r="45"></circle>
-              <circle id="donut-segment" class="donut-segment" cx="50" cy="50" r="45"></circle>
+              <circle class="donut-track" cx="50" cy="50" r="45"></circle>
+              <circle id="donut-progress" class="donut-progress" cx="50" cy="50" r="45"></circle>
             </svg>
 
             <div>
-              <h4 id="donut-ratio-text" style="font-size: 1.8rem; font-weight: 800;">0%</h4>
-              <p style="color: #94a3b8; font-size: 0.85rem;">Total seat capacity filled across all active events.</p>
+              <h4 id="donut-ratio-text" style="font-size: 1.8rem; font-weight: 800; font-family: var(--font-display);">0%</h4>
+              <p style="color: #94a3b8; font-size: 0.85rem;">Aggregate venue capacity utilized across active event programs.</p>
             </div>
           </div>
         </div>
 
-        <!-- Item 5: Next Event Countdown (Bento Wide) -->
-        <div class="spotlight-card tilt-card bento-item bento-wide">
-          <div class="bento-header">
-            <span class="bento-label">Next Upcoming Event Countdown</span>
-            <span class="badge-holo badge-vip-foil">NEXT UP</span>
+        <!-- Countdown Clock (Bento Wide) -->
+        <div class="navy-card bento-card bento-wide">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Next Executive Event Clock</span>
+            <span class="badge-gold badge-general-cyan">UPCOMING</span>
           </div>
 
           <div id="countdown-container">
-            <!-- Countdown units rendered via JavaScript -->
+            <!-- Rendered via JS -->
           </div>
         </div>
       </div>
@@ -182,63 +192,66 @@
 
     <!-- SECTION 2: EVENTS DIRECTORY -->
     <section id="events-section" style="display:none;">
-      <div class="section-top">
-        <h2 style="font-size: 1.8rem; display: flex; align-items: center; gap: 0.75rem;">
-          <span>📅</span> Event Directory
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.75rem;">
+        <h2 style="font-size: 1.8rem; display:flex; align-items:center; gap:0.75rem;">
+          <span style="color:var(--gold-bright);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </span>
+          Executive Events Directory
         </h2>
-        <button class="btn-shimmer btn-holo btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
+        <button class="btn-gold btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
           + Add Event
         </button>
       </div>
 
-      <div class="filter-glass-bar">
-        <div class="search-input-wrapper">
-          <span class="search-icon-left">🔍</span>
-          <input type="text" id="events-search-bar" placeholder="Search event title, venue, or location...">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span class="search-icon-svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="events-search-bar" placeholder="Filter events by title, venue, or location...">
         </div>
       </div>
 
-      <!-- Events Card Grid -->
       <div id="events-cards-grid" class="events-cards-grid">
-        <!-- Event Cards auto-rendered here -->
+        <!-- Event Cards rendered via JS -->
       </div>
     </section>
 
-    <!-- SECTION 3: REGISTER ATTENDEE (GLASS FORM + LIVE TICKET PREVIEW) -->
+    <!-- SECTION 3: REGISTER DELEGATE -->
     <section id="register-section" style="display:none;">
-      <div class="section-top">
-        <h2 style="font-size: 1.8rem;">
-          <span>⚡</span> Issue Holographic Ticket Pass
+      <div style="margin-bottom:1.75rem;">
+        <h2 style="font-size: 1.8rem; display:flex; align-items:center; gap:0.75rem;">
+          <span style="color:var(--gold-bright);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+          </span>
+          Delegate Pass Registration
         </h2>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; align-items: start;">
-        <!-- Left Column: Registration Form -->
-        <div class="spotlight-card" style="padding: 2rem;">
-          <h3 style="font-size: 1.3rem; margin-bottom: 1.25rem;">Attendee Details</h3>
+        <div class="navy-card" style="padding: 2rem;">
+          <h3 style="font-size: 1.3rem; margin-bottom: 1.25rem;">Delegate Registration Form</h3>
           <form id="form-register">
-            <div class="form-field">
+            <div class="form-group">
               <label class="form-label" for="reg-event-id">Target Event *</label>
-              <select id="reg-event-id" class="form-input" required>
+              <select id="reg-event-id" class="form-control" required>
                 <option value="">-- Select Event --</option>
               </select>
-              <div id="err-reg-event" class="inline-error">Please select a target event</div>
             </div>
 
-            <div class="form-field">
+            <div class="form-group">
               <label class="form-label" for="reg-name">Full Name *</label>
-              <input type="text" id="reg-name" class="form-input" placeholder="e.g. Dr. Evelyn Vance" required>
-              <div id="err-reg-name" class="inline-error">Attendee name is required</div>
+              <input type="text" id="reg-name" class="form-control" placeholder="e.g. Dr. Evelyn Vance" required>
             </div>
 
-            <div class="form-field">
+            <div class="form-group">
               <label class="form-label" for="reg-email">Email Address *</label>
-              <input type="email" id="reg-email" class="form-input" placeholder="e.g. evelyn@quantum.io" required>
-              <div id="err-reg-email" class="inline-error">Please enter a valid email address</div>
+              <input type="email" id="reg-email" class="form-control" placeholder="e.g. evelyn@sovereign.io" required>
             </div>
 
-            <div class="form-field">
-              <label class="form-label">Ticket Type Pass *</label>
+            <div class="form-group">
+              <label class="form-label">Pass Tier *</label>
               <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
                 <label style="cursor: pointer;">
                   <input type="radio" name="ticket_type" value="General" checked style="display:none;">
@@ -246,7 +259,7 @@
                 </label>
                 <label style="cursor: pointer;">
                   <input type="radio" name="ticket_type" value="VIP" style="display:none;">
-                  <div class="pill-btn" style="text-align:center;" data-ticket-radio="VIP">VIP</div>
+                  <div class="pill-btn" style="text-align:center;" data-ticket-radio="VIP">VIP Pass</div>
                 </label>
                 <label style="cursor: pointer;">
                   <input type="radio" name="ticket_type" value="Student" style="display:none;">
@@ -255,36 +268,36 @@
               </div>
             </div>
 
-            <button type="submit" class="btn-shimmer btn-pink" style="width: 100%; margin-top: 1rem;">
-              ✨ Confirm & Issue Pass
+            <button type="submit" class="btn-gold" style="width: 100%; margin-top: 1rem;">
+              Confirm & Issue Pass
             </button>
           </form>
         </div>
 
-        <!-- Right Column: Live Ticket Preview -->
+        <!-- Live Preview -->
         <div>
-          <h3 style="font-size: 1.1rem; color: #94a3b8; margin-bottom: 1rem;">Live Pass Holographic Preview</h3>
-          <div class="spotlight-card tilt-card boarding-pass-card" style="min-height: 260px;">
-            <div class="pass-header">
+          <h3 style="font-size: 1.1rem; color: #94a3b8; margin-bottom: 1rem;">Live Executive Pass Preview</h3>
+          <div class="navy-card ticket-pass-card" style="min-height: 260px;">
+            <div class="pass-head">
               <div>
-                <span id="preview-ticket-badge" class="badge-holo badge-general-cyan">GENERAL PASS</span>
+                <span id="preview-ticket-badge" class="badge-gold badge-general-cyan">GENERAL PASS</span>
               </div>
-              <div style="font-size: 0.8rem; color: #64748b; font-family: var(--font-heading);">
-                #EH-PREVIEW
+              <div style="font-size: 0.8rem; color: #64748b; font-family: var(--font-display);">
+                #EH-OFFICIAL
               </div>
             </div>
 
-            <div class="pass-body">
-              <h3 id="preview-ticket-name" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem;">PASS HOLDER NAME</h3>
-              <p id="preview-ticket-email" style="color: var(--cyan-primary); font-size: 0.9rem; margin-bottom: 1rem;">attendee@horizon.io</p>
+            <div class="pass-main">
+              <h3 id="preview-ticket-name" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem;">DELEGATE HOLDER NAME</h3>
+              <p id="preview-ticket-email" style="color: var(--gold-bright); font-size: 0.9rem; margin-bottom: 1rem;">delegate@sovereign.io</p>
 
               <div style="background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
-                <div style="color: #94a3b8; font-size: 0.75rem; text-transform: uppercase;">Event Name</div>
-                <strong id="preview-ticket-event" style="color: #fff;">Select an Event</strong>
+                <div style="color: #64748b; font-size: 0.75rem; text-transform: uppercase;">Event Title</div>
+                <strong id="preview-ticket-event" style="color: #fff;">Select Target Event</strong>
               </div>
             </div>
 
-            <div class="pass-footer">
+            <div class="pass-foot">
               <div class="barcode">
                 <div class="barcode-bar w-2"></div>
                 <div class="barcode-bar w-1"></div>
@@ -293,7 +306,7 @@
                 <div class="barcode-bar w-2"></div>
                 <div class="barcode-bar w-3"></div>
               </div>
-              <span style="font-size: 0.75rem; color: #64748b;">HOLOGRAPHIC SEAL</span>
+              <span style="font-size: 0.75rem; color: #64748b; text-transform:uppercase; letter-spacing:0.05em;">SOVEREIGN STAMP</span>
             </div>
           </div>
         </div>
@@ -302,39 +315,43 @@
 
     <!-- SECTION 4: ATTENDEES DIRECTORY -->
     <section id="attendees-section" style="display:none;">
-      <div class="section-top">
-        <h2 style="font-size: 1.8rem; display: flex; align-items: center; gap: 0.75rem;">
-          <span>🎫</span> Attendees Directory
-          <span id="attendees-count-tag" class="badge-holo badge-general-cyan" style="margin-left: 0.5rem;">0 Attendees</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.75rem;">
+        <h2 style="font-size: 1.8rem; display:flex; align-items:center; gap:0.75rem;">
+          <span style="color:var(--gold-bright);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          Delegates & Attendees
+          <span id="attendees-count-tag" class="badge-gold badge-vip-gold" style="margin-left: 0.5rem;">0 Attendees</span>
         </h2>
-        <button class="btn-shimmer btn-pink btn-sm" onclick="EventHorizonApp.switchSection('register-section')">
-          ⚡ Register New Pass
+        <button class="btn-gold btn-sm" onclick="EventHorizonApp.switchSection('register-section')">
+          + Issue New Pass
         </button>
       </div>
 
-      <div class="filter-glass-bar">
-        <div class="search-input-wrapper">
-          <span class="search-icon-left">🔍</span>
-          <input type="text" id="attendees-search-bar" placeholder="Search attendees by name, email, or event...">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span class="search-icon-svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="attendees-search-bar" placeholder="Search delegates by name, email, or event...">
         </div>
 
         <div class="pill-group" id="ticket-pill-filter">
-          <button class="pill-btn active" data-ticket="All">All Tickets</button>
+          <button class="pill-btn active" data-ticket="All">All Passes</button>
           <button class="pill-btn" data-ticket="General">General</button>
           <button class="pill-btn" data-ticket="VIP">VIP</button>
           <button class="pill-btn" data-ticket="Student">Student</button>
         </div>
 
         <div>
-          <select id="attendees-event-dropdown-filter" class="form-input" style="padding: 0.45rem 2rem 0.45rem 1rem; font-size: 0.85rem;">
+          <select id="attendees-event-dropdown-filter" class="form-control" style="padding: 0.45rem 2rem 0.45rem 1rem; font-size: 0.85rem;">
             <option value="">All Events</option>
           </select>
         </div>
       </div>
 
-      <!-- Attendees Display Container -->
       <div id="attendees-display-container">
-        <!-- Holographic Boarding Passes auto-rendered here -->
+        <!-- Passes rendered via JS -->
       </div>
     </section>
 
@@ -342,35 +359,37 @@
 
   <!-- MODAL 1: Create Event -->
   <div id="modal-create-event" class="modal-backdrop">
-    <div class="modal-glass-card">
-      <div class="modal-title-row">
-        <h3 style="font-size: 1.4rem;">✨ Create New Event</h3>
-        <button class="close-icon-btn" onclick="EventHorizonUI.closeModal('modal-create-event')">&times;</button>
+    <div class="modal-navy-box">
+      <div class="modal-header-row">
+        <h3 style="font-size: 1.4rem;">Create New Executive Event</h3>
+        <button class="close-btn-svg" onclick="EventHorizonUI.closeModal('modal-create-event')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
       </div>
       <form id="form-create-event">
-        <div class="form-field">
+        <div class="form-group">
           <label class="form-label" for="ev-name">Event Name *</label>
-          <input type="text" id="ev-name" class="form-input" placeholder="e.g. AI & Web3 Summit 2026" required>
+          <input type="text" id="ev-name" class="form-control" placeholder="e.g. AI & Robotics Executive Summit" required>
         </div>
 
-        <div class="form-field">
+        <div class="form-group">
           <label class="form-label" for="ev-date">Event Date *</label>
-          <input type="date" id="ev-date" class="form-input" required>
+          <input type="date" id="ev-date" class="form-control" required>
         </div>
 
-        <div class="form-field">
+        <div class="form-group">
           <label class="form-label" for="ev-venue">Venue / Location *</label>
-          <input type="text" id="ev-venue" class="form-input" placeholder="e.g. Hyperion Dome, Bay Area" required>
+          <input type="text" id="ev-venue" class="form-control" placeholder="e.g. Grand Cyber Tower, Pavilion A" required>
         </div>
 
-        <div class="form-field">
+        <div class="form-group">
           <label class="form-label" for="ev-capacity">Total Seat Capacity *</label>
-          <input type="number" id="ev-capacity" class="form-input" placeholder="e.g. 50" min="1" required>
+          <input type="number" id="ev-capacity" class="form-control" placeholder="e.g. 50" min="1" required>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
-          <button type="button" class="btn-shimmer btn-glass-subtle" onclick="EventHorizonUI.closeModal('modal-create-event')">Cancel</button>
-          <button type="submit" class="btn-shimmer btn-holo">Create Event</button>
+          <button type="button" class="btn-navy-outline" onclick="EventHorizonUI.closeModal('modal-create-event')">Cancel</button>
+          <button type="submit" class="btn-gold">Create Event</button>
         </div>
       </form>
     </div>
@@ -378,40 +397,44 @@
 
   <!-- MODAL 2: Confirm Delete -->
   <div id="modal-confirm-delete" class="modal-backdrop">
-    <div class="modal-glass-card" style="max-width: 420px; text-align: center;">
-      <div style="font-size: 3rem; margin-bottom: 0.5rem; color: #fb7185;">⚠️</div>
-      <h3 id="delete-confirm-header" style="font-size: 1.3rem;">Confirm Delete?</h3>
+    <div class="modal-navy-box" style="max-width: 420px; text-align: center;">
+      <div style="color: var(--rose-accent); margin-bottom: 0.5rem; display:flex; justify-content:center;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <h3 id="delete-confirm-header" style="font-size: 1.3rem;">Confirm Revocation</h3>
       <p id="delete-confirm-text" style="color: #94a3b8; margin: 0.75rem 0 1.5rem; font-size: 0.9rem;">
         This action cannot be undone.
       </p>
       <div style="display: flex; justify-content: center; gap: 0.75rem;">
-        <button type="button" class="btn-shimmer btn-glass-subtle" onclick="EventHorizonUI.closeModal('modal-confirm-delete')">Cancel</button>
-        <button type="button" id="btn-execute-delete" class="btn-shimmer btn-danger-glass">Yes, Delete</button>
+        <button type="button" class="btn-navy-outline" onclick="EventHorizonUI.closeModal('modal-confirm-delete')">Cancel</button>
+        <button type="button" id="btn-execute-delete" class="btn-danger-navy">Confirm Revoke</button>
       </div>
     </div>
   </div>
 
   <!-- COMMAND PALETTE OVERLAY (Ctrl+K) -->
-  <div id="cmd-k-overlay" class="cmd-k-overlay" onclick="if(event.target === this) EventHorizonApp.toggleCmdK(false)">
-    <div class="cmd-k-modal">
-      <div class="cmd-k-search">
-        <span style="font-size: 1.2rem; color: var(--cyan-primary);">🔍</span>
-        <input type="text" id="cmd-k-input" placeholder="Type to search events or attendees globally...">
-        <kbd style="background:rgba(255,255,255,0.1); padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">ESC</kbd>
+  <div id="cmd-k-overlay" class="cmd-overlay" onclick="if(event.target === this) EventHorizonApp.toggleCmdK(false)">
+    <div class="cmd-card">
+      <div class="cmd-search-bar">
+        <span style="color: var(--gold-bright);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input type="text" id="cmd-k-input" placeholder="Search events, delegates, or venues...">
+        <kbd style="background:rgba(255,255,255,0.08); padding:0.2rem 0.5rem; border-radius:4px; font-size:0.75rem;">ESC</kbd>
       </div>
 
-      <div id="cmd-k-results" class="cmd-k-results">
+      <div id="cmd-k-results" class="cmd-results-list">
         <div style="padding: 1rem; color: #64748b; font-size: 0.85rem; text-align: center;">
-          Start typing to search events, attendees, or venue locations...
+          Start typing to query global records...
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast Shelf Notification Container -->
+  <!-- Toast Shelf -->
   <div id="toast-shelf"></div>
 
-  <!-- JavaScript Modules -->
+  <!-- Scripts -->
   <script src="js/mock.js"></script>
   <script src="js/api.js"></script>
   <script src="js/ui.js"></script>

@@ -71,12 +71,22 @@ class EventHorizonApp {
           (id, name) => this.promptDeleteEvent(id, name)
         );
 
-        // Populate dropdowns
-        this.populateDropdowns(res.data);
+        // Update Overview Featured Summit Showcase Card
+        if (res.data && res.data.length > 0) {
+          const topEvent = res.data[0];
+          const featuredTitle = document.getElementById('hero-featured-title');
+          const featuredVenue = document.getElementById('hero-featured-venue');
+          const featuredText = document.getElementById('hero-featured-capacity-text');
+          const featuredBar = document.getElementById('hero-featured-bar');
 
-        // Update countdown with earliest upcoming event
-        const nextEvent = res.data.find(e => new Date(e.date) >= new Date());
-        EventHorizonUI.updateCountdownClock(nextEvent ? nextEvent.date : null);
+          if (featuredTitle) featuredTitle.innerText = topEvent.name;
+          if (featuredVenue) featuredVenue.innerText = `${topEvent.venue} • ${EventHorizonUI.formatDate(topEvent.date)}`;
+          if (featuredText) featuredText.innerHTML = `<strong>${topEvent.registered_count}</strong> / ${topEvent.capacity} seats`;
+          if (featuredBar) {
+            const pct = Math.min(Math.round((topEvent.registered_count / topEvent.capacity) * 100), 100);
+            featuredBar.style.width = `${pct}%`;
+          }
+        }
       }
     } catch (err) {
       EventHorizonUI.showToast(err.message || 'Failed to fetch events', 'error');

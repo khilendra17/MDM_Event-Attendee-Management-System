@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EventHorizon — Mysterious Executive Navy & Gold System</title>
-  <meta name="description" content="EventHorizon is a sovereign, high-contrast Navy & Gold Event and Attendee Management Platform.">
+  <title>EventHorizon — Sovereign Executive Event & Attendee Management Platform</title>
+  <meta name="description" content="EventHorizon is a sovereign high-contrast Executive Event & Attendee Management Platform with real-time zero-reload sync.">
 
   <!-- Google Fonts: Syne, Plus Jakarta Sans, Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -23,7 +23,6 @@
   <div class="gold-aura-bg">
     <div class="aurora-orb orb-navy-1"></div>
     <div class="aurora-orb orb-gold-2"></div>
-    <div class="aurora-orb orb-navy-3"></div>
   </div>
 
   <!-- Executive Floating Glass Navbar -->
@@ -61,7 +60,7 @@
       <button class="btn-navy-outline btn-sm" onclick="EventHorizonApp.toggleCmdK(true)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <span>Search</span>
-        <kbd style="background:rgba(255,255,255,0.08); padding:0.1rem 0.4rem; border-radius:4px; font-size:0.75rem;">Ctrl+K</kbd>
+        <kbd style="background:rgba(255,255,255,0.1); padding:0.1rem 0.4rem; border-radius:4px; font-size:0.75rem;">Ctrl+K</kbd>
       </button>
 
       <button class="btn-gold btn-sm" onclick="EventHorizonApp.openCreateEventModal()">
@@ -82,77 +81,116 @@
   <!-- Main Container -->
   <main class="container">
 
-    <!-- SECTION 1: HOME OVERVIEW & BENTO STATS -->
+    <!-- SECTION 1: OVERVIEW PAGE (WITH BACKDROP IMAGE & SPLIT LAYOUT) -->
     <section id="home-section">
-      <div class="navy-card hero-navy">
-        <div class="hero-tag-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          SOVEREIGN EXECUTIVE PLATFORM v1.0
-        </div>
-        <h1 class="hero-heading">
-          Executive Event & Delegate System <br>
-          <span class="gold-text-gradient">Precision. Security. Real-Time Operations.</span>
-        </h1>
-        <p class="hero-subtext">
-          Manage high-capacity summits, issue official delegation passes, track real-time venue occupancy, and execute instant global queries with zero reloads.
-        </p>
-        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-          <button class="btn-gold" onclick="EventHorizonApp.openCreateEventModal()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#070d1e" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Create New Event
-          </button>
-          <button class="btn-navy-outline" onclick="EventHorizonApp.switchSection('register-section')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
-            Register Delegate
-          </button>
+      <!-- High-Contrast Backdrop Hero -->
+      <div class="hero-overview-image">
+        <div class="hero-overview-split">
+          <!-- Left Column: Title & Controls -->
+          <div>
+            <div class="hero-live-indicator">
+              <span class="status-dot"></span>
+              <span>EXECUTIVE EVENT PLATFORM v1.0 &bull; LIVE SYNC</span>
+            </div>
+            
+            <h1 class="hero-title-main">
+              Sovereign Event & <br>
+              <span class="gold-text-gradient">Attendee System</span>
+            </h1>
+
+            <p class="hero-description">
+              Streamline summit registrations, issue holographic boarding passes, monitor live venue capacity metrics, and query delegate records instantaneously — built with zero page reloads.
+            </p>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              <button class="btn-gold" onclick="EventHorizonApp.openCreateEventModal()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#070d1e" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Create New Event
+              </button>
+              <button class="btn-navy-outline" onclick="EventHorizonApp.switchSection('register-section')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+                Issue Delegate Pass
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Featured Event Live Card Showcase -->
+          <div class="hero-featured-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <span class="badge-gold badge-vip-gold">FEATURED SUMMIT</span>
+              <span style="font-size:0.8rem; color:#cbd5e1; font-weight:600;">ACTIVE PROGRAM</span>
+            </div>
+
+            <h3 id="hero-featured-title" style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; color: #ffffff;">
+              Tech Innovation Summit 2026
+            </h3>
+
+            <p id="hero-featured-venue" style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 1.25rem;">
+              Silicon Hall, Grand Convention Center
+            </p>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 0.85rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; border: 1px solid rgba(245,158,11,0.25);">
+              <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.4rem; color:#cbd5e1;">
+                <span>Venue Occupancy</span>
+                <span id="hero-featured-capacity-text"><strong>12</strong> / 50 seats</span>
+              </div>
+              <div class="capacity-bar-track">
+                <div id="hero-featured-bar" class="capacity-bar-fill" style="width: 24%;"></div>
+              </div>
+            </div>
+
+            <button class="btn-gold btn-sm" style="width:100%;" onclick="EventHorizonApp.switchSection('register-section')">
+              ⚡ Register For Featured Event
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Bento Grid Stats Dashboard -->
+      <!-- Bento Grid Stats Dashboard (High Contrast Text) -->
       <div class="bento-grid">
         <div class="navy-card bento-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Total Events</span>
+            <span style="color:#e2e8f0; font-size:0.95rem; font-weight:600;">Total Events</span>
             <div class="bento-icon-gold">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             </div>
           </div>
           <div>
             <div id="bento-events-count" class="bento-stat-val">0</div>
-            <p style="font-size:0.8rem; color:#64748b;">Active events in database</p>
+            <p style="font-size:0.85rem; color:#cbd5e1; font-weight:500;">Active events in database</p>
           </div>
         </div>
 
         <div class="navy-card bento-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Registered Delegates</span>
+            <span style="color:#e2e8f0; font-size:0.95rem; font-weight:600;">Registered Delegates</span>
             <div class="bento-icon-gold">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
           </div>
           <div>
-            <div id="bento-attendees-count" class="bento-stat-val">0</div>
-            <p style="font-size:0.8rem; color:#64748b;">Issued official passes</p>
+            <div id="bento-attendees-count" class="bento-stat-val" style="color:var(--cyan-accent);">0</div>
+            <p style="font-size:0.85rem; color:#cbd5e1; font-weight:500;">Issued official passes</p>
           </div>
         </div>
 
         <div class="navy-card bento-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Open Seat Capacity</span>
+            <span style="color:#e2e8f0; font-size:0.95rem; font-weight:600;">Open Seats</span>
             <div class="bento-icon-gold">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><path d="M13 5v14"/></svg>
             </div>
           </div>
           <div>
-            <div id="bento-seats-count" class="bento-stat-val">0</div>
-            <p style="font-size:0.8rem; color:#64748b;">Available seat positions</p>
+            <div id="bento-seats-count" class="bento-stat-val" style="color:var(--emerald-accent);">0</div>
+            <p style="font-size:0.85rem; color:#cbd5e1; font-weight:500;">Available seat positions</p>
           </div>
         </div>
 
         <!-- Donut Occupancy Chart (Bento Wide) -->
         <div class="navy-card bento-card bento-wide">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Venue Occupancy Metrics</span>
+            <span style="color:#e2e8f0; font-size:0.95rem; font-weight:600;">Overall Occupancy Metric</span>
             <span class="badge-gold badge-vip-gold">REAL-TIME RATIO</span>
           </div>
 
@@ -170,8 +208,8 @@
             </svg>
 
             <div>
-              <h4 id="donut-ratio-text" style="font-size: 1.8rem; font-weight: 800; font-family: var(--font-display);">0%</h4>
-              <p style="color: #94a3b8; font-size: 0.85rem;">Aggregate venue capacity utilized across active event programs.</p>
+              <h4 id="donut-ratio-text" style="font-size: 2rem; font-weight: 800; font-family: var(--font-display); color: #ffffff;">0%</h4>
+              <p style="color: #cbd5e1; font-size: 0.9rem; font-weight: 500;">Total seat capacity allocated across all active event programs.</p>
             </div>
           </div>
         </div>
@@ -179,12 +217,42 @@
         <!-- Countdown Clock (Bento Wide) -->
         <div class="navy-card bento-card bento-wide">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span style="color:#94a3b8; font-size:0.95rem; font-weight:500;">Next Executive Event Clock</span>
+            <span style="color:#e2e8f0; font-size:0.95rem; font-weight:600;">Next Event Countdown Clock</span>
             <span class="badge-gold badge-general-cyan">UPCOMING</span>
           </div>
 
           <div id="countdown-container">
             <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Feature Highlights Grid -->
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 1.25rem; font-family: var(--font-display);">Platform Capabilities</h3>
+        <div class="features-grid">
+          <div class="feature-box">
+            <div style="color: var(--gold-bright);">${EventHorizonUI.getSVGIcon('check')}</div>
+            <h4 class="feature-title">Zero-Reload Dynamic UI</h4>
+            <p class="feature-desc">Full-stack AJAX Fetch architecture updating DOM states instantly without refreshing the page.</p>
+          </div>
+
+          <div class="feature-box">
+            <div style="color: var(--cyan-accent);">${EventHorizonUI.getSVGIcon('ticket')}</div>
+            <h4 class="feature-title">Capacity Safeguard</h4>
+            <p class="feature-desc">Atomic SQLite transaction guards preventing overbooking and duplicate registration entries.</p>
+          </div>
+
+          <div class="feature-box">
+            <div style="color: var(--emerald-accent);">${EventHorizonUI.getSVGIcon('search')}</div>
+            <h4 class="feature-title">Debounced Search Engine</h4>
+            <p class="feature-desc">Live multi-field filtering across event names, venues, delegate emails, and ticket pass types.</p>
+          </div>
+
+          <div class="feature-box">
+            <div style="color: var(--gold-bright);">${EventHorizonUI.getSVGIcon('crown')}</div>
+            <h4 class="feature-title">Holographic Boarding Passes</h4>
+            <p class="feature-desc">Digital executive pass generation complete with CSS barcodes and tiered VIP/Student badges.</p>
           </div>
         </div>
       </div>
@@ -276,7 +344,7 @@
 
         <!-- Live Preview -->
         <div>
-          <h3 style="font-size: 1.1rem; color: #94a3b8; margin-bottom: 1rem;">Live Executive Pass Preview</h3>
+          <h3 style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1rem; font-weight:600;">Live Executive Pass Preview</h3>
           <div class="navy-card ticket-pass-card" style="min-height: 260px;">
             <div class="pass-head">
               <div>
@@ -291,8 +359,8 @@
               <h3 id="preview-ticket-name" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem;">DELEGATE HOLDER NAME</h3>
               <p id="preview-ticket-email" style="color: var(--gold-bright); font-size: 0.9rem; margin-bottom: 1rem;">delegate@sovereign.io</p>
 
-              <div style="background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
-                <div style="color: #64748b; font-size: 0.75rem; text-transform: uppercase;">Event Title</div>
+              <div style="background: rgba(255,255,255,0.04); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
+                <div style="color: #cbd5e1; font-size: 0.75rem; text-transform: uppercase;">Event Title</div>
                 <strong id="preview-ticket-event" style="color: #fff;">Select Target Event</strong>
               </div>
             </div>
@@ -306,7 +374,7 @@
                 <div class="barcode-bar w-2"></div>
                 <div class="barcode-bar w-3"></div>
               </div>
-              <span style="font-size: 0.75rem; color: #64748b; text-transform:uppercase; letter-spacing:0.05em;">SOVEREIGN STAMP</span>
+              <span style="font-size: 0.75rem; color: #94a3b8; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;">SOVEREIGN STAMP</span>
             </div>
           </div>
         </div>
@@ -402,7 +470,7 @@
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
       <h3 id="delete-confirm-header" style="font-size: 1.3rem;">Confirm Revocation</h3>
-      <p id="delete-confirm-text" style="color: #94a3b8; margin: 0.75rem 0 1.5rem; font-size: 0.9rem;">
+      <p id="delete-confirm-text" style="color: #cbd5e1; margin: 0.75rem 0 1.5rem; font-size: 0.9rem;">
         This action cannot be undone.
       </p>
       <div style="display: flex; justify-content: center; gap: 0.75rem;">
@@ -424,7 +492,7 @@
       </div>
 
       <div id="cmd-k-results" class="cmd-results-list">
-        <div style="padding: 1rem; color: #64748b; font-size: 0.85rem; text-align: center;">
+        <div style="padding: 1rem; color: #cbd5e1; font-size: 0.85rem; text-align: center;">
           Start typing to query global records...
         </div>
       </div>

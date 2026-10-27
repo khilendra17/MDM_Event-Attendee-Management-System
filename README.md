@@ -3,6 +3,12 @@
 EventHorizon is a full-stack, real-time CRUD web application built for event organisers, workshops, and meetups. It features a modern glassmorphic interface, dynamic zero-reload DOM updates via Fetch/AJAX, input validation, capacity enforcement, search filtering, and an Express + SQLite backend.
 
 ---
+git init
+git add .
+git commit -m "Add workflow"
+git branch -M main
+git remote add origin https://github.com/khilendra17/MDM_Event-Attendee-Management-System
+git push -u origin main
 
 ## ✨ Features
 
